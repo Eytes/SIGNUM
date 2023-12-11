@@ -4,17 +4,23 @@
 
 ## Стек
 
+- Docker
 - Python ^3.11.5
 - Poetry
-- Docker
 - MongoDB
 
 ## Использованные библиотеки
 
 ### Для работы проекта
 
+### Frontend
+
 - aiogram3
+
+### Backend
+
 - fastapi
+- pymongo
 
 ### Для тестирования
 
