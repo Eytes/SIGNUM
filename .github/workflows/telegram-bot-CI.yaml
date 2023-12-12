@@ -28,9 +28,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            telegram-bot
-            tests-telegram-bot
+            telegram_bot
+            tests_telegram_bot
             pyproject.toml
+            pytest.ini
           sparse-checkout-cone-mode: false
 
       - name: Install dependencies
