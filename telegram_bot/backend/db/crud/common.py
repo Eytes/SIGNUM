@@ -14,7 +14,7 @@ def get_document(collection: Collection, elements: dict) -> dict:
 
 
 def get_documents(collection: Collection, elements: dict) -> list[dict]:
-    """ Function to retrieve single document from a provided
+    """ Function to retrieve multiple documents from a provided
     Collection using a dictionary containing a document's elements. """
     return [item for item in collection.find(elements)]
 
