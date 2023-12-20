@@ -35,7 +35,11 @@ jobs:
           ls -la /home/runner/work/SIGNUM/SIGNUM
 
       - name: Install dependencies
-        run: cd telegram_bot/backend && poetry install --no-interaction --with test
+        run: |
+          cd telegram_bot/backend 
+          poetry install --no-interaction --no-root --no-directory --with test
 
       - name: Run tests
-        run: poetry run pytest
+        run: |
+          cd telegram_bot/backend 
+          poetry run pytest
