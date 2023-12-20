@@ -6,7 +6,7 @@ authors = ["Eytes <yura.shamanov2000@bk.ru>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 fastapi = {extras = ["all"], version = "^0.105.0"}
 requests = "^2.31.0"
 pymongo = "^4.6.1"
