@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongo",
+          "--quiet",
+          "127.0.0.1/test",
+          "--eval",
+          "'quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+#    volumes:
+#      - "./telegram_bot/db_data/:/data/db"
+
+  python-backend:
+    build: ./telegram_bot/backend
+    restart: always
+    depends_on:
+      mongo:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost" ]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    ports:
+      - "8080:80"
