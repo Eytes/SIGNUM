@@ -29,7 +29,10 @@ jobs:
           sparse-checkout-cone-mode: false
 
       - name: View folder contain
-        run: ls telegram_bot/backend -la
+        run: |
+          ls telegram_bot/backend -la
+          pwd
+          ls -la /home/runner/work/SIGNUM/SIGNUM
 
       - name: Install dependencies
         run: cd telegram_bot/backend && poetry install --no-interaction --with test
