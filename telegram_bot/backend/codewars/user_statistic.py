@@ -1,7 +1,7 @@
 import requests
 
 from db.crud.users import *
-from db.exeptions import UserWithoutNickname
+from db.exeptions import UserWithoutNicknameError
 from codewars.models_user_statistic import (
     CodeWarsFullUserStatistic,
     CodeWarsMinUserStatistic,
@@ -31,5 +31,5 @@ def get_user_statistic_by_telegram_id(
 ) -> CodeWarsMinUserStatistic | CodeWarsFullUserStatistic:
     nickname = get_nickname(telegram_id)
     if not nickname:
-        raise UserWithoutNickname
+        raise UserWithoutNicknameError
     return get_user_statistic_by_nickname(nickname, full_statistic)

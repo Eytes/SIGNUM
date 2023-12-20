@@ -7,7 +7,7 @@ def create_document(collection: Collection, document: dict) -> str:
     return str(collection.insert_one(document).inserted_id)
 
 
-def get_document(collection: Collection, elements: dict) -> dict:
+def get_document(collection: Collection, elements: dict) -> dict | None:
     """ Function to retrieve single document from a provided
     Collection using a dictionary containing a document's elements. """
     return collection.find_one(elements)
