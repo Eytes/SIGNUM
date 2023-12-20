@@ -1,6 +1,6 @@
 class UserWithoutNicknameError(Exception):
-    def __init__(self):
-        super().__init__('У пользователя нет зарегистрированного nickname codewars')
+    def __init__(self, telegram_id: int):
+        super().__init__(f'У пользователя {telegram_id=} нет зарегистрированного nickname codewars')
 
 
 class UserNotFoundError(Exception):

@@ -13,23 +13,35 @@ CODEWARS_GET_USER = 'https://www.codewars.com/api/v1/users/{nickname}'
 def get_user_statistic_by_nickname(
         nickname: str,
         full_statistic: bool = False
-) -> CodeWarsMinUserStatistic | CodeWarsFullUserStatistic:
-    response_json = requests.get(CODEWARS_GET_USER.format(nickname=nickname)).json()
-    if full_statistic:
-        return CodeWarsFullUserStatistic(**response_json)
-    return CodeWarsMinUserStatistic(
-        honor=response_json.get('honor'),
-        skills=response_json.get('skills'),
-        ranks=response_json.get('ranks'),
-        code_challenges=response_json.get('code_challenges'),
-    )
+) -> CodeWarsMinUserStatistic | CodeWarsFullUserStatistic | None:
+    try:
+        response = requests.get(CODEWARS_GET_USER.format(nickname=nickname))
+
+        if response.status_code == 404:
+            raise UserNotFoundError(nickname=nickname)
+
+        response_json = response.json()
+
+        if full_statistic:
+            return CodeWarsFullUserStatistic(**response_json)
+        return CodeWarsMinUserStatistic(
+            honor=response_json.get('honor'),
+            skills=response_json.get('skills'),
+            ranks=response_json.get('ranks'),
+            code_challenges=response_json.get('code_challenges'),
+        )
+
+    except (UserWithoutNicknameError, UserNotFoundError):
+        return None
 
 
 def get_user_statistic_by_telegram_id(
         telegram_id: int,
         full_statistic: bool = False
-) -> CodeWarsMinUserStatistic | CodeWarsFullUserStatistic:
-    nickname = get_nickname(telegram_id)
-    if not nickname:
-        raise UserWithoutNicknameError
-    return get_user_statistic_by_nickname(nickname, full_statistic)
+) -> CodeWarsMinUserStatistic | CodeWarsFullUserStatistic | None:
+    try:
+        nickname = get_nickname(telegram_id)
+        return get_user_statistic_by_nickname(nickname, full_statistic)
+
+    except (UserWithoutNicknameError, UserNotFoundError):
+        return None

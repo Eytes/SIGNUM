@@ -1,20 +1,26 @@
-from fastapi import APIRouter
+from enum import Enum
+
+from fastapi import (
+    APIRouter,
+    status,
+)
+from fastapi.responses import JSONResponse
 
 from codewars.user_statistic import get_user_statistic_by_telegram_id
-
 
 router = APIRouter(
     prefix='/user'
 )
 
 
-@router.get('/full_statistic/{telegram_id}')
-def get_full_statistic(telegram_id: int) -> dict:
-    statistic = get_user_statistic_by_telegram_id(telegram_id, True)
-    return statistic.model_dump(by_alias=True)
+class UserStatisticFormat(str, Enum):
+    full = True
+    min = False
 
 
-@router.get('/min_statistic/{telegram_id}')
-def get_min_statistic(telegram_id: int) -> dict:
-    statistic = get_user_statistic_by_telegram_id(telegram_id)
-    return statistic.model_dump(by_alias=True)
+@router.get('/statistic/{show_full_statistic}/{telegram_id}')
+def get_statistic(show_full_statistic: UserStatisticFormat, telegram_id: int) -> JSONResponse:
+    statistic = get_user_statistic_by_telegram_id(telegram_id, show_full_statistic.value)
+    if not statistic:
+        return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content=None)
+    return JSONResponse(status_code=status.HTTP_200_OK, content=statistic.model_dump(by_alias=True))
