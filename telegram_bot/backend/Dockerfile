@@ -19,8 +19,6 @@ MAINTAINER Eytes <yura.shamanov2000@bk.ru>
 
 COPY . .
 
-EXPOSE 8000
-
 ENTRYPOINT [ \
     "/root/.local/bin/poetry", "run", "uvicorn", "main:app", \
     "--proxy-headers", \
