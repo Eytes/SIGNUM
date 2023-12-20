@@ -1,4 +1,4 @@
-name: CI
+name: Backend CI
 run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
 on: push
 jobs:
@@ -28,11 +28,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            telegram_bot
-            tests_telegram_bot
-            pyproject.toml
-            pytest.ini
-          sparse-checkout-cone-mode: false
+            telegram_bot/backend
 
       - name: Install dependencies
         run: poetry install --with test
