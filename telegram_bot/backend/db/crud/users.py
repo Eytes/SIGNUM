@@ -4,6 +4,7 @@ from db.collections import users
 from db.exeptions import (
     UserNotFoundError,
     UserExistError,
+    UserWithoutNicknameError,
 )
 
 
@@ -78,11 +79,14 @@ def delete(telegram_id: int) -> None:
     )
 
 
-def get_nickname(telegram_id: int) -> str | None:
+def get_nickname(telegram_id: int) -> str:
     """
     Хендлер для получения имени пользователя на codewars
     """
-    return get_by_telegram_id(telegram_id).get('nickname', None)
+    nickname = get_by_telegram_id(telegram_id).get('nickname')
+    if not nickname:
+        raise UserWithoutNicknameError(telegram_id)
+    return nickname
 
 
 def update_nickname(telegram_id: int, new_nickname: str):
