@@ -14,10 +14,15 @@ def get_user_statistic_by_nickname(
         nickname: str,
         full_statistic: bool = False
 ) -> CodeWarsMinUserStatistic | CodeWarsFullUserStatistic:
-    response = requests.get(CODEWARS_GET_USER.format(nickname=nickname))
+    response_json = requests.get(CODEWARS_GET_USER.format(nickname=nickname)).json()
     if full_statistic:
-        return CodeWarsFullUserStatistic(**response.json())
-    return CodeWarsMinUserStatistic(**response.json())
+        return CodeWarsFullUserStatistic(**response_json)
+    return CodeWarsMinUserStatistic(
+        honor=response_json.get('honor'),
+        skills=response_json.get('skills'),
+        ranks=response_json.get('ranks'),
+        code_challenges=response_json.get('code_challenges'),
+    )
 
 
 def get_user_statistic_by_telegram_id(
