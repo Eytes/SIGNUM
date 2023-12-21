@@ -28,8 +28,8 @@
 
 ## Логика Backend
 
-![img.png](readme-images/backend.png)
+![img.png](readme_images/backend.png)
 
 ## Логика Frontend
 
-![img.png](readme-images/frontend.png)
+![img.png](readme_images/frontend.png)
