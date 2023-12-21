@@ -22,5 +22,5 @@ class UserStatisticFormat(str, Enum):
 def get_statistic(show_full_statistic: UserStatisticFormat, telegram_id: int) -> JSONResponse:
     statistic = get_user_statistic_by_telegram_id(telegram_id, show_full_statistic.value)
     if not statistic:
-        return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={'detail': 'User not found'})
+        return JSONResponse(status_code=status.HTTP_404_NOT_FOUND)
     return JSONResponse(status_code=status.HTTP_200_OK, content=statistic.model_dump(by_alias=True))

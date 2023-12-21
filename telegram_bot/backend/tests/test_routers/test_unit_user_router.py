@@ -5,10 +5,10 @@ from tests.conftest import client
 @pytest.mark.parametrize(
     'show_full_statistic, telegram_id, expected_status, expected_value',
     [
-        (True, 123, 404, {'detail': 'User not found'}),
-        (True, 1, 404, {'detail': 'User not found'}),
-        (True, 132541235132, 404, {'detail': 'User not found'}),
-        (True, -1237645, 404, {'detail': 'User not found'}),
+        (True, 123, 404, {'detail': 'Not Found'}),
+        (True, 1, 404, {'detail': 'Not Found'}),
+        (True, 132541235132, 404, {'detail': 'Not Found'}),
+        (True, -1237645, 404, {'detail': 'Not Found'}),
     ]
 )
 def test_get_statistic(show_full_statistic, telegram_id, expected_status, expected_value):
