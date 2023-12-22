@@ -1,6 +1,19 @@
 name: Checking compliance with flake8 rules
 run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
-on: push
+on:
+  workflow_call:
+  push:
+    branches-ignore:
+      - backend
+      - backend/*
+      - backend-features
+      - backend-features/*
+  pull_request:
+    branches-ignore:
+      - backend
+      - backend/*
+      - backend-features
+      - backend-features/*
 jobs:
   check_linting:
     name: Lint code
