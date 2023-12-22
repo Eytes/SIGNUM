@@ -20,7 +20,7 @@ jobs:
     uses: ./.github/workflows/telegram-bot-linting.yml
 
   testing:
-    name: 'Check for changes in the backend'
+    name: Testing backend
     needs: [ lint ]
     runs-on: ubuntu-latest
     strategy:
