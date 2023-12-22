@@ -16,8 +16,12 @@ on:
       - backend-features
       - backend-features/*
 jobs:
+  lint:
+    uses: ./.github/workflows/telegram-bot-linting.yml
+
   testing:
     name: 'Check for changes in the backend'
+    needs: [ lint ]
     runs-on: ubuntu-latest
     strategy:
       matrix:
