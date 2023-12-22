@@ -7,6 +7,12 @@ on:
       - backend/*
       - backend-features
       - backend-features/*
+  pull_request:
+    branches:
+      - backend
+      - backend/*
+      - backend-features
+      - backend-features/*
 jobs:
   testing:
     name: 'Check for changes in the backend'
