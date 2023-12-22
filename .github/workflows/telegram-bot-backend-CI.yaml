@@ -1,21 +1,24 @@
-name: CI
+name: Backend CI
 run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
-on: push
+on:
+  push:
+    branches:
+      - backend
+      - backend/*
+      - backend-features
+      - backend-features/*
 jobs:
   testing:
-    name: 'Check for source changes'
+    name: 'Check for changes in the backend'
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [ "3.11", "3.12" ]
+        python-version: [ "3.10", "3.11", "3.12" ]
     steps:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-
-      - name: Display Python version
-        run: python -c "import sys; print(sys.version)"
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -24,17 +27,25 @@ jobs:
           virtualenvs-in-project: false
           installer-parallel: true
 
-      - name: Get repository code
+      - name: Get backend code
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            telegram-bot
-            tests-telegram-bot
-            pyproject.toml
+            telegram_bot/backend/*
           sparse-checkout-cone-mode: false
 
+      - name: View folder contain
+        run: |
+          ls telegram_bot/backend -la
+          pwd
+          ls -la /home/runner/work/SIGNUM/SIGNUM
+
       - name: Install dependencies
-        run: poetry install --with test
+        run: |
+          cd telegram_bot/backend 
+          poetry install --no-interaction --no-root --no-directory --with test
 
       - name: Run tests
-        run: poetry run pytest
+        run: |
+          cd telegram_bot/backend 
+          poetry run pytest
