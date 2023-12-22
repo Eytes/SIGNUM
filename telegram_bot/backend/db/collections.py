@@ -1,4 +1,3 @@
-from bson.binary import UuidRepresentation
 from pymongo import MongoClient
 from pymongo.collection import Collection
 
