@@ -1,6 +1,9 @@
 import requests
 
-from db.crud.users import *
+from db.crud.users import (
+    get_nickname,
+    UserNotFoundError,
+)
 from db.exeptions import UserWithoutNicknameError
 from codewars.models_user_statistic import (
     CodeWarsFullUserStatistic,
