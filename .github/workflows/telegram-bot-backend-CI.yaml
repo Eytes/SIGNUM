@@ -37,8 +37,6 @@ jobs:
       - name: View folder contain
         run: |
           ls telegram_bot/backend -la
-          pwd
-          ls -la /home/runner/work/SIGNUM/SIGNUM
 
       - name: Install dependencies
         run: |
