@@ -1,5 +1,10 @@
 from db.models.user import User
-from db.crud.common import *
+from db.crud.common import (
+    create_document,
+    get_document,
+    update_document,
+    delete_document,
+)
 from db.collections import users
 from db.exeptions import (
     UserNotFoundError,

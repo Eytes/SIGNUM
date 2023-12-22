@@ -3,6 +3,14 @@ run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
 on:
   push:
     branches:
+      - dev
+      - backend
+      - backend/*
+      - backend-features
+      - backend-features/*
+  pull_request:
+    branches:
+      - dev
       - backend
       - backend/*
       - backend-features
@@ -37,8 +45,6 @@ jobs:
       - name: View folder contain
         run: |
           ls telegram_bot/backend -la
-          pwd
-          ls -la /home/runner/work/SIGNUM/SIGNUM
 
       - name: Install dependencies
         run: |
