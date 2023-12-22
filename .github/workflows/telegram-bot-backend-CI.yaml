@@ -1,6 +1,12 @@
 name: Backend CI
 run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
-on: push
+on:
+  push:
+    branches:
+      - backend
+      - backend/*
+      - backend-features
+      - backend-features/*
 jobs:
   testing:
     name: 'Check for changes in the backend'
