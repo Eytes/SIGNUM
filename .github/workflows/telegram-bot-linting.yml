@@ -1,19 +1,13 @@
 name: Checking compliance with flake8 rules
-run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
+run-name: ${{ github.event_name }} to ${{ github.ref_name }} by @${{ github.actor }}
 on:
   workflow_call:
   push:
-    branches-ignore:
-      - backend
-      - backend/*
-      - backend-features
-      - backend-features/*
+    branches:
+      - cicd
   pull_request:
-    branches-ignore:
-      - backend
-      - backend/*
-      - backend-features
-      - backend-features/*
+    branches:
+      - cicd
 jobs:
   check_linting:
     name: Lint code
