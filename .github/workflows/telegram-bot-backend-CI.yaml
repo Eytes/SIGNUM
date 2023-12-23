@@ -17,7 +17,7 @@ on:
       - backend-features/*
 jobs:
   lint:
-    if: ${{ github.event_name != 'push' }}
+    if: ${{ github.event_name == 'push' }}
     uses: ./.github/workflows/telegram-bot-linting.yml
 
   testing:
