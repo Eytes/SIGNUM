@@ -1,5 +1,5 @@
 name: Backend CI
-run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
+run-name: ${{ github.event_name }} to ${{ github.ref_name }} by @${{ github.actor }}
 on:
   push:
     branches:
@@ -17,11 +17,13 @@ on:
       - backend-features/*
 jobs:
   lint:
+    if: ${{ github.event_name == 'push' }}
     uses: ./.github/workflows/telegram-bot-linting.yml
 
   testing:
     name: Testing backend
     needs: [ lint ]
+    if: always()
     runs-on: ubuntu-latest
     strategy:
       matrix:
