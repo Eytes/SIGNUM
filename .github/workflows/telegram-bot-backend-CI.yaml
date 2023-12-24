@@ -4,17 +4,11 @@ on:
   push:
     branches:
       - dev
-      - backend
-      - backend/*
-      - backend-features
-      - backend-features/*
+      - backend**
   pull_request:
     branches:
       - dev
-      - backend
-      - backend/*
-      - backend-features
-      - backend-features/*
+      - backend**
 jobs:
   lint:
     if: ${{ github.event_name == 'push' }}
