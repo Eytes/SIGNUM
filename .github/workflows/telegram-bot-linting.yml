@@ -1,13 +1,6 @@
 name: Linting with flak8
 run-name: ${{ github.event_name }} to ${{ github.ref_name }} by @${{ github.actor }}
-on:
-  workflow_call:
-  push:
-    branches:
-      - cicd
-  pull_request:
-    branches:
-      - cicd
+on: workflow_call
 jobs:
   check_linting:
     name: Lint code
