@@ -1,0 +1,21 @@
+name: Backend CI
+run-name: ${{ github.event_name }} to ${{ github.ref_name }} by @${{ github.actor }}
+on:
+  push:
+    branches:
+      - dev
+      - frontend
+      - frontend/*
+      - frontend-features
+      - frontend-features/*
+  pull_request:
+    branches:
+      - dev
+      - frontend
+      - frontend/*
+      - frontend-features
+      - frontend-features/*
+jobs:
+  lint:
+    if: ${{ github.event_name == 'push' }}
+    uses: ./.github/workflows/telegram-bot-linting.yml
