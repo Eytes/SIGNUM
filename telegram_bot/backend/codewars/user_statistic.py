@@ -1,5 +1,6 @@
 import requests
 
+from codewars.urls import CODEWARS_GET_USER_URL
 from db.crud.users import (
     get_nickname,
     UserNotFoundError,
@@ -9,8 +10,6 @@ from codewars.models_user_statistic import (
     CodeWarsFullUserStatistic,
     CodeWarsMinUserStatistic,
 )
-
-CODEWARS_GET_USER_URL = 'https://www.codewars.com/api/v1/users/{nickname}'
 
 
 def get_user_statistic_by_nickname(

@@ -6,7 +6,7 @@ from tests.conftest import (
     full_statistic_data,
     min_statistic_data
 )
-from codewars.user_statistic import CODEWARS_GET_USER_URL
+from codewars.urls import CODEWARS_GET_USER_URL
 
 
 @pytest.mark.parametrize(
