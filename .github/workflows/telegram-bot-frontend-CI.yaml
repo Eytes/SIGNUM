@@ -1,4 +1,4 @@
-name: Backend CI
+name: Frontend CI
 run-name: ${{ github.event_name }} to ${{ github.ref_name }} by @${{ github.actor }}
 on:
   push:
