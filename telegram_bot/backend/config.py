@@ -2,8 +2,9 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    prefix_api_v1 = "/api/v1"
-    codewars_get_user_url = "https://www.codewars.com/api/v1/users/"
+    prefix_api_v1: str = "/api/v1"
+    codewars_get_user_url: str = "https://www.codewars.com/api/v1/users/"
+    prefix_user_router: str = "/users"
 
     @staticmethod
     def detail_not_found(identifier: int | str):
