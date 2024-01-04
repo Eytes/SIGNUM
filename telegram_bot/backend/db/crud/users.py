@@ -1,4 +1,4 @@
-from db.models.user import User
+from db.models.user import CreateUser
 from db.crud.common import (
     create_document,
     get_document,
@@ -47,7 +47,7 @@ def get_by_nickname(nickname: str) -> dict:
     return user
 
 
-def create(user_data: User) -> str:
+def create(user_data: CreateUser) -> str:
     """
     Хендлер создания пользователя
     """
