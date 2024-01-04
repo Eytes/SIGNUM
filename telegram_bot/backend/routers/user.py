@@ -11,6 +11,7 @@ from codewars.user_statistic import (
 from db.exeptions import UserExistError
 from db.models.user import CreateUser
 from db.crud import users as users_crud
+
 router = APIRouter(
     prefix='/user'
 )
