@@ -1,0 +1,29 @@
+name: Linting with flak8
+run-name: ${{ github.event_name }} to ${{ github.ref_name }} by @${{ github.actor }}
+on: workflow_call
+jobs:
+  check_linting:
+    name: Lint code
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ "3.10", "3.11", "3.12" ]
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Get code
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            telegram_bot/backend
+            telegram_bot/frontend
+          sparse-checkout-cone-mode: false
+
+      - name: Install flake8
+        run: pip install flake8 pytest
+
+      - name: Lint code
+        run: flake8 --statistics --show-source --max-line-length 120 ./telegram_bot/*

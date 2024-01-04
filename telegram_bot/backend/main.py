@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from telegram_bot.backend.routers.user import router as user_router
+from routers.user import router as user_router
 
 
 def create_app() -> FastAPI:
