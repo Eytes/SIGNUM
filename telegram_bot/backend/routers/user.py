@@ -65,5 +65,5 @@ def get_user_by_telegram_id(telegram_id: int):
     response_model=User,
     status_code=status.HTTP_200_OK,
 )
-def get_user_by_telegram_id(nickname: str):
+def get_user_by_nickname(nickname: str):
     return users_crud.get_by_nickname(nickname)
