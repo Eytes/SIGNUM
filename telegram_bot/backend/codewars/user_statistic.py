@@ -1,5 +1,6 @@
 import requests
 
+from codewars.urls import CODEWARS_GET_USER_URL
 from codewars.models_user_statistic import (
     CodeWarsFullStatistic,
     CodeWarsMinStatistic,
