@@ -1,3 +1,4 @@
+from db.models.user import CreateUser
 from db.collections import users
 from db.crud.common import (
     create_document,
@@ -41,6 +42,7 @@ def get_by_nickname(nickname: str) -> User:
     if not user:
         raise NicknameNotFoundException(nickname)
     return User(**user)
+
 
 
 def create(user_data: User) -> str:

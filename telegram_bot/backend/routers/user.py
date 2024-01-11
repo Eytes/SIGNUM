@@ -8,8 +8,10 @@ from codewars.user_statistic import (
     get_user_statistic_by_telegram_id,
     get_user_statistic_by_nickname,
 )
+from db.exeptions import UserExistError
+from db.models.user import CreateUser
 from db.crud import users as users_crud
-from db.models.user import User
+
 
 router = APIRouter(tags=["Users"])
 
@@ -41,6 +43,15 @@ def get_statistic_by_telegram_id(
 def get_statistic_by_codewars_nickname(show_full_statistic: bool, nickname: str):
     statistic = get_user_statistic_by_nickname(nickname, show_full_statistic)
     if not statistic:
+        return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={"detail": 'not found'})
+    return JSONResponse(status_code=status.HTTP_200_OK, content=statistic.model_dump(by_alias=True))
+
+
+@router.post('/')
+def create_user(new_user: CreateUser):
+    try:
+        return users_crud.create(new_user)
+    except UserExistError:
         return JSONResponse(
             status_code=status.HTTP_404_NOT_FOUND,
             content={"detail": "not found"},
@@ -67,3 +78,4 @@ def get_user_by_telegram_id(telegram_id: int):
 )
 def get_user_by_nickname(nickname: str):
     return users_crud.get_by_nickname(nickname)
+
