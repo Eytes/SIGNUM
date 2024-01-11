@@ -14,6 +14,7 @@ from aiogram.types import (
 )
 
 from config import settings
+from bot_answers import welcome_text
 
 bot = Bot(token=settings.bot_token.get_secret_value())
 dp = Dispatcher()
@@ -23,7 +24,7 @@ dp = Dispatcher()
 async def send_welcome(message: Message):
     buttons = [
         InlineKeyboardButton(
-            text="Просмотр статистики",
+            text="Зарегистрировать никнейм",
             callback_data="button1",
         ),
         InlineKeyboardButton(
@@ -32,6 +33,7 @@ async def send_welcome(message: Message):
         ),
     ]
     keyboard = InlineKeyboardMarkup(inline_keyboard=[buttons])
+    await message.answer(welcome_text)
     await message.answer("Выберите кнопку:", reply_markup=keyboard)
 
 
