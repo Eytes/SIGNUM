@@ -1,16 +1,7 @@
 from fastapi import FastAPI
 
-from routers.user import router as user_router
+from config import settings
+from routers import router
 
-
-def create_app() -> FastAPI:
-    app = FastAPI(
-        title='SIGNUM telegram bot backend'
-    )
-
-    app.include_router(user_router)
-
-    return app
-
-
-app = create_app()
+app = FastAPI(title="SIGNUM telegram bot backend")
+app.include_router(router=router, prefix=settings.prefix_api_v1)

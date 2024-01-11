@@ -1,9 +1,10 @@
 from fastapi.testclient import TestClient
+
 from main import app
 
 client = TestClient(app)
 
-not_found_nickname = {'detail': 'not found'}
+not_found_nickname = {"detail": "Not Found"}
 
 full_statistic_data = {
     "id": "123213321asdasdasdasd",
@@ -44,13 +45,13 @@ full_statistic_data = {
                 "name": "8 kyu",
                 "color": "white",
                 "score": 16,
-            }
-        }
+            },
+        },
     },
     "codeChallenges": {
         "totalAuthored": 0,
         "totalCompleted": 57,
-    }
+    },
 }
 
 min_statistic_data = {
@@ -87,8 +88,8 @@ min_statistic_data = {
                 "name": "8 kyu",
                 "color": "white",
                 "score": 16,
-            }
-        }
+            },
+        },
     },
     "codeChallenges": {
         "totalAuthored": 0,
