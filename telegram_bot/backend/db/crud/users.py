@@ -1,19 +1,20 @@
-from db.models.user import User
+from db.models.user import CreateUser
+from db.collections import users
 from db.crud.common import (
     create_document,
     get_document,
     update_document,
     delete_document,
 )
-from db.collections import users
 from db.exeptions import (
-    UserNotFoundError,
-    UserExistError,
-    UserWithoutNicknameError,
+    UserNotFoundException,
+    UserExistException,
+    NicknameNotFoundException,
 )
+from db.models.user import User
 
 
-def user_exists(telegram_id: int) -> bool:
+def _user_exists(telegram_id: int) -> bool:
     user = get_document(
         users,
         {"telegram_id": telegram_id},
@@ -21,38 +22,33 @@ def user_exists(telegram_id: int) -> bool:
     return True if user else False
 
 
-def get_by_telegram_id(telegram_id: int) -> dict:
-    """
-    Хендлер для получения пользователя по его telegram id
-    """
+def get_by_telegram_id(telegram_id: int) -> User:
+    """Хендлер для получения пользователя по его telegram id"""
     user = get_document(
         users,
         {"telegram_id": telegram_id},
     )
     if not user:
-        raise UserNotFoundError(telegram_id=telegram_id)
-    return user
+        raise UserNotFoundException(telegram_id)
+    return User(**user)
 
 
-def get_by_nickname(nickname: str) -> dict:
-    """
-    Хендлер для получения пользователя по его nickname на codewars
-    """
+def get_by_nickname(nickname: str) -> User:
+    """Хендлер для получения пользователя по его nickname на codewars"""
     user = get_document(
         users,
         {"nickname": nickname},
     )
     if not user:
-        raise UserNotFoundError(nickname=nickname)
-    return user
+        raise NicknameNotFoundException(nickname)
+    return User(**user)
+
 
 
 def create(user_data: User) -> str:
-    """
-    Хендлер создания пользователя
-    """
-    if user_exists(user_data.telegram_id):
-        raise UserExistError(user_data.telegram_id)
+    """Хендлер создания пользователя"""
+    if _user_exists(user_data.telegram_id):
+        raise UserExistException(user_data.telegram_id)
     return create_document(
         users,
         user_data.model_dump(by_alias=True),
@@ -60,11 +56,9 @@ def create(user_data: User) -> str:
 
 
 def update(telegram_id: int, new_value: dict) -> None:
-    """
-    Хендлер обновление данных о пользователе
-    """
-    if not user_exists(telegram_id):
-        raise UserNotFoundError(telegram_id=telegram_id)
+    """Хендлер обновление данных о пользователе"""
+    if not _user_exists(telegram_id):
+        raise UserNotFoundException(telegram_id)
     update_document(
         users,
         {"telegram_id": telegram_id},
@@ -73,29 +67,20 @@ def update(telegram_id: int, new_value: dict) -> None:
 
 
 def delete(telegram_id: int) -> None:
-    """
-    Хендлер для удаления пользователя
-    """
-    if not user_exists(telegram_id):
-        raise UserNotFoundError(telegram_id=telegram_id)
+    """Хендлер для удаления пользователя"""
+    if not _user_exists(telegram_id):
+        raise UserNotFoundException(telegram_id)
     delete_document(
         users,
         {"telegram_id": telegram_id},
     )
 
 
-def get_nickname(telegram_id: int) -> str:
-    """
-    Хендлер для получения имени пользователя на codewars
-    """
-    nickname = get_by_telegram_id(telegram_id).get('nickname')
-    if not nickname:
-        raise UserWithoutNicknameError(telegram_id)
-    return nickname
+def get_nickname(telegram_id: int) -> str | None:
+    """Хендлер для получения имени пользователя на codewars"""
+    return get_by_telegram_id(telegram_id).get("nickname")
 
 
 def update_nickname(telegram_id: int, new_nickname: str):
-    """
-    Обновление nickname пользователя
-    """
-    update(telegram_id, {'nickname': new_nickname})
+    """Обновление nickname пользователя"""
+    update(telegram_id, {"nickname": new_nickname})
