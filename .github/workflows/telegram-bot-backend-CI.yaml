@@ -17,7 +17,7 @@ jobs:
   testing:
     name: Testing backend
     needs: [ lint ]
-    if: always()
+    if: ${{ !failure() && !cancelled() && always() }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -49,7 +49,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd telegram_bot/backend 
-          poetry install --no-interaction --no-root --no-directory --with test
+          poetry install --no-interaction --no-root --no-directory --with dev
 
       - name: Run tests
         run: |
