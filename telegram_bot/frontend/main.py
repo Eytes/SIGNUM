@@ -13,8 +13,11 @@ from aiogram.types import (
     CallbackQuery,
 )
 
+from bot_answers import (
+    welcome_text,
+    registration_text,
+)
 from config import settings
-from bot_answers import welcome_text
 
 bot = Bot(token=settings.bot_token.get_secret_value())
 dp = Dispatcher()
@@ -37,8 +40,16 @@ async def send_welcome(message: Message):
     await message.answer("Выберите кнопку:", reply_markup=keyboard)
 
 
-@dp.callback_query(lambda c: c.data in ["button2"])
-async def process_choice1(callback_query: CallbackQuery):
+@dp.callback_query(F.data == "button1")
+async def process_registration(callback_query: CallbackQuery):
+    await bot.send_message(
+        text=registration_text,
+        chat_id=callback_query.from_user.id,
+    )
+
+
+@dp.callback_query(F.data == "button2")
+async def process_button2(callback_query: CallbackQuery):
     buttons = [
         InlineKeyboardButton(
             text="Получить свою статистику",
@@ -57,15 +68,12 @@ async def process_choice1(callback_query: CallbackQuery):
     )
 
 
-@dp.callback_query(lambda c: c.data in ["choice1", "choice2"])
-async def process_choice2(callback_query: CallbackQuery):
-    await bot.send_message(
-        chat_id=callback_query.from_user.id,
-        text=callback_query.data,
-    )
+# @dp.callback_query(F.data in ["choice1", "choice2"])
+# async def process_choices(callback_query: CallbackQuery):
+#     await callback_query.message.answer(text=registration_text)
 
 
-@dp.message(Command("help"))
+@dp.message(F.text, Command("help"))
 async def send_help(message: Message):
     await message.answer("Вам помогут эти команды")
 
